@@ -1,6 +1,8 @@
 # pytailor
 
 [![Build Status](https://travis-ci.org/bradleygolden/pytailor.svg?branch=master)](https://travis-ci.org/bradleygolden/pytailor)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![codecov](https://codecov.io/gh/bradleygolden/pytailor/branch/master/graph/badge.svg)](https://codecov.io/gh/bradleygolden/pytailor)
 
 Quickly set up configuration for your application or library with ease.
 
