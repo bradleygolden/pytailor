@@ -9,7 +9,7 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import Command, find_packages, setup
+from setuptools import Command, setup
 
 NAME = "pytailor"
 DESCRIPTION = "Custom tailor your apps configuration easily."
@@ -90,7 +90,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=("tests", "examples")),
+    packages=[NAME],
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     include_package_data=True,
