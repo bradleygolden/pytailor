@@ -81,3 +81,23 @@ def test_dunder_str():
     config = Tailor()
     config["DEBUG"] = True
     assert str(config) == expected
+
+
+def test_dunder_eq():
+    config_one = Tailor()
+    config_one["DEBUG"] = True
+
+    config_two = Tailor()
+    config_two["DEBUG"] = True
+
+    assert config_one == config_two
+
+
+def test_dunder_ne():
+    config_one = Tailor()
+    config_one["DEBUG"] = True
+
+    config_two = Tailor()
+    config_two["DEBUG"] = False
+
+    assert config_one != config_two

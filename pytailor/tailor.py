@@ -33,6 +33,18 @@ class Tailor(dict):
     def __setitem__(self, key, val):
         self.store.__setitem__(key, val)
 
+    def __eq__(self, other):
+        if not isinstance(other, dict):
+            return False
+        return (
+            dict.__eq__(self, other)
+            and self.env_store == other.env_store
+            and self.store == other.store
+        )
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def __contains__(self, item):
         return item in self.store
 
