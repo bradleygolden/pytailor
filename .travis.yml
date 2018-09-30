@@ -4,20 +4,13 @@ stages:
   - test
   - deploy
 
-matrix:
-  include:
-  - python: 3.6
-    env: TOXENV=lint
-  - python: 3.6
-    env: TOXENV=py36
-  - python: 3.6
-    env: TOXENV=docs
-
-
 jobs:
   include:
     - stage: test
       install: pip install tox codecov
+      python: 3.6
+      env:
+        - TOXENV=py36
       script: tox
     - stage: deploy
       script: skip
