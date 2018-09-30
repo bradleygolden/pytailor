@@ -42,17 +42,29 @@ def get_float(value: str) -> float:
     if is_float(value):
         return float(value)
     else:
-        raise ValueError(f"Not a valid number. Must be or {type(float)}")
+        raise ValueError(f"Not a valid number. Must be {type(float)}")
 
 
 def get_boolean(value: str) -> bool:
-    return BOOLEAN_STATES[value]
-
-
-def env_to_py(value: str):
+    """Get a boolean from a value."""
     if is_boolean_state(value):
-        return get_boolean(value)
-    return value
+        return BOOLEAN_STATES[value]
+    else:
+        raise ValueError(f"Not a valid boolean. Must be {type(float)}")
+
+
+def str_to_py(value: str):
+    """Convert an string value to a native python type."""
+    rv: Any
+    if is_boolean_state(value):
+        rv = get_boolean(value)
+    elif is_integer(value):
+        rv = get_integer(value)
+    elif is_float(value):
+        rv = get_float(value)
+    else:
+        rv = value
+    return rv
 
 
 def dotenv_to_dict(path: str) -> Dict[str, Any]:
@@ -64,13 +76,7 @@ def dotenv_to_dict(path: str) -> Dict[str, Any]:
     for line in lines:
         if line.startswith("#"):
             continue
-        name, value = line.strip().split("=")
-        if is_boolean_state(value):
-            rv[name] = get_boolean(value)
-        elif is_integer(value):
-            rv[name] = get_integer(value)
-        elif is_float(value):
-            rv[name] = get_float(value)
-        else:
-            rv[name] = value
+        name, value = line.strip().split("=", 1)
+        py_value = str_to_py(value)
+        rv[name] = py_value
     return rv
