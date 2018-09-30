@@ -1,5 +1,7 @@
 # pytailor
 
+[![Build Status](https://travis-ci.org/bradleygolden/pytailor.svg?branch=master)](https://travis-ci.org/bradleygolden/pytailor)
+
 Quickly set up configuration for your application or library with ease.
 
 ## Features
