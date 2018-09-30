@@ -7,7 +7,7 @@
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/bradleygolden/pytailor.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bradleygolden/pytailor/context:python)
 [![GitHub license](https://img.shields.io/github/license/bradleygolden/pytailor.svg)](https://github.com/bradleygolden/pytailor/blob/master/LICENSE)
 
-Quickly set up configuration for your application or library with ease.
+Set up configuration for your application or library with ease.
 
 ## Features
 
