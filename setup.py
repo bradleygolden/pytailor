@@ -12,8 +12,8 @@ from shutil import rmtree
 from setuptools import Command, setup
 
 NAME = "pytailor"
-DESCRIPTION = "Custom tailor your apps configuration easily."
-URL = ""
+DESCRIPTION = "Set up configuration for your application or library with ease."
+URL = "https://github.com/bradleygolden/pytailor"
 EMAIL = "golden.bradley@gmail.com"
 AUTHOR = "Bradley Golden"
 REQUIRES_PYTHON = ">=3.6.0"
@@ -39,7 +39,7 @@ if not VERSION:
     with open(os.path.join(here, NAME, "__version__.py")) as f:
         exec(f.read(), about)
 else:
-    about["__version__"] = VERSION
+    about["__version__"] = VERSION  # lgtm [py/unreachable-statement]
 
 
 class UploadCommand(Command):
