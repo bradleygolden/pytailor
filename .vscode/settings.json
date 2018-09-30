@@ -1,0 +1,16 @@
+{
+    "python.formatting.blackArgs": ["--line-length", "88"],
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "python.sortImports.args": [
+        "-rc",
+        "--atomic"
+    ],
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.linting.mypyEnabled": false,
+}
