@@ -74,3 +74,10 @@ def test_user_can_use_number_types_with_dotenv(env_path):
     assert config["MAX_LINES"] == 10
     assert isinstance(config["TEMPERATURE"], float)
     assert config["TEMPERATURE"] == 98.2
+
+
+def test_dunder_str():
+    expected = "{'DEBUG': True}"
+    config = Tailor()
+    config["DEBUG"] = True
+    assert str(config) == expected

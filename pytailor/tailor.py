@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from .helpers import dotenv_to_dict, env_to_py
+from .helpers import dotenv_to_dict, str_to_py
 
 
 class Tailor(dict):
@@ -15,7 +15,7 @@ class Tailor(dict):
             # environment variables always take precedence
             try:
                 env_value = os.environ[key]
-                rv = env_to_py(env_value)
+                rv = str_to_py(env_value)
             except KeyError:
                 # system environment variable no longer exists
                 # does a saved config value exist?
@@ -58,5 +58,5 @@ class Tailor(dict):
     def watch_env_var(self, name: str):
         """Set configuration and watch a system wideenvironment variable."""
         value = os.environ[name]
-        mod_value = env_to_py(value)
+        mod_value = str_to_py(value)
         self.env_store[name] = mod_value
