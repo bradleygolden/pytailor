@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import warnings
 
 from .helpers import dotenv_to_dict, str_to_py
 
@@ -68,7 +69,11 @@ class Tailor(dict):
             self.store[name] = value
 
     def watch_env_var(self, name: str):
-        """Set configuration and watch a system wideenvironment variable."""
-        value = os.environ[name]
-        mod_value = str_to_py(value)
-        self.env_store[name] = mod_value
+        """Set configuration and watch a system wide environment variable."""
+        value = os.getenv(name)
+        if not value:
+            warn_msg = f"Environment variable '{name}' not found."
+            warnings.warn(warn_msg, RuntimeWarning)
+        else:
+            mod_value = str_to_py(value)
+            self.env_store[name] = mod_value

@@ -11,6 +11,10 @@ pytestmark = pytest.mark.unit
 
 
 def setup_function():
+    try:
+        del os.environ["FOO"]
+    except KeyError:
+        pass
     os.environ["FOO"] = "BAR"
 
 
@@ -43,6 +47,23 @@ def test_from_object_and_then_dotenv(env_path):
     assert "TESTING" in config
     assert config["DEBUG"] is True
     assert config["TESTING"] is False
+
+
+def test_watch_env_var_that_doesnt_exist_raises_warning():
+    config = Tailor()
+    with pytest.warns(RuntimeWarning) as warn:
+        config.watch_env_var("BAR")
+
+    assert len(warn) == 1
+    assert "not found" in warn[0].message.args[0]
+
+
+def test_watch_env_var_that_doesnt_exist_but_exists_in_config_object():
+    config = Tailor()
+    config["BAR"] = "BAZ"
+    config.watch_env_var("BAR")
+    assert "BAR" in config
+    assert config["BAR"] == "BAZ"
 
 
 def test_watch_env_var_and_change_after_watching():
