@@ -21,4 +21,4 @@ config.from_dotenv(str(path))
 # you can also watch environment variables
 # note: environment variables will always take precedence
 #       over any other value
-config.watch_env_var("TESTING")
+config.from_envar("TESTING")

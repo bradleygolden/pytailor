@@ -31,7 +31,7 @@ config = Tailor()
 # load from a simple object
 config.from_object(Config)
 # add and watch environment variables
-config.watch_env_var("DEBUG")
+config.from_envar("DEBUG")
 # use a dotenv file
 config.from_dotenv("/path/to/.env/")
 # config works like a dict!
@@ -61,7 +61,7 @@ DEBUG=true
 from pytailor import Tailor
 config = Tailor()
 # watch each variable loaded by Pipenv
-config.watch_env_var("DEBUG")
+config.from_envar("DEBUG")
 config["DEBUG"]  # True
 ```
 
@@ -81,6 +81,6 @@ from pytailor import Tailor
 load_dotenv()
 config = Tailor()
 # watch each variable loaded by python-dotenv
-config.watch_env_var("DEBUG")
+config.from_envar("DEBUG")
 config["DEBUG"]  # True
 ```
