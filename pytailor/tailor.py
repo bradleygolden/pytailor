@@ -8,7 +8,6 @@ from .helpers import dotenv_to_dict, str_to_py
 class Tailor(dict):
     def __init__(self):
         self.env_store = dict()
-        self.store = dict()
 
     def __getitem__(self, key):
         rv = None
@@ -20,37 +19,16 @@ class Tailor(dict):
             except KeyError:
                 # system environment variable no longer exists
                 # does a saved config value exist?
-                if key in self.store:
-                    rv = self.store[key]
+                if key in self.keys():
+                    rv = super().__getitem__(key)
                 else:
                     # seems the user deleted their environment variable and
                     # don't have it configured in a file
                     rv = self.env_store[key]
         else:
-            rv = self.store[key]
+            rv = super().__getitem__(key)
 
         return rv
-
-    def __setitem__(self, key, val):
-        self.store.__setitem__(key, val)
-
-    def __eq__(self, other):
-        if not isinstance(other, dict):
-            return False
-        return (
-            dict.__eq__(self, other)
-            and self.env_store == other.env_store
-            and self.store == other.store
-        )
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
-    def __contains__(self, item):
-        return item in self.store
-
-    def __str__(self):
-        return str(self.store)
 
     def from_object(self, obj: object):
         """Read configuration from an object."""
@@ -60,13 +38,13 @@ class Tailor(dict):
             if not key.startswith("__")
         }
         for name, value in _store.items():
-            self.store[name] = value
+            self[name] = value
 
     def from_dotenv(self, path: str):
         """Load configuration from specified .env path."""
         _store = dotenv_to_dict(path)
         for name, value in _store.items():
-            self.store[name] = value
+            self[name] = value
 
     def watch_env_var(self, name: str):
         """Set configuration and watch a system wide environment variable."""
