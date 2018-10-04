@@ -46,8 +46,8 @@ class Tailor(dict):
         for name, value in _store.items():
             self[name] = value
 
-    def watch_env_var(self, name: str):
-        """Set configuration and watch a system wide environment variable."""
+    def from_envar(self, name: str):
+        """Set configuration from an environment variable."""
         value = os.getenv(name)
         if not value:
             warn_msg = f"Environment variable '{name}' not found."
