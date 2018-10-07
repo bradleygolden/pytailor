@@ -39,7 +39,7 @@ def test_from_dotenv(env_path):
     assert config["DEBUG"] is True
 
 
-def test_from_object_and_then_dotenv(env_path):
+def test_from_obj_and_then_dotenv(env_path):
     config = Tailor()
     config.from_dotenv(env_path)
     config.from_object(DevConfig)
@@ -66,7 +66,7 @@ def test_from_envar_that_doesnt_exist_but_exists_in_config_object():
     assert config["BAR"] == "BAZ"
 
 
-def test_from_envar_and_change_after_watching():
+def test_from_envar_and_change_after_setting_value():
     config = Tailor()
     config.from_envar("FOO")
     assert config["FOO"] == "BAR"
@@ -74,18 +74,33 @@ def test_from_envar_and_change_after_watching():
     assert config["FOO"] == "BAZ"
 
 
-def test_env_var_is_set_then_gets_removed():
+def test_env_var_is_set_then_gets_removed_without_default_raises_exception():
     config = Tailor()
     config.from_envar("FOO")
     del os.environ["FOO"]
-    # check original value was backed up
+    with pytest.raises(ValueError):
+        config["FOO"]
+
+
+def test_env_var_is_set_then_gets_removed_with_default_value_set():
+    config = Tailor()
+    config.from_object(DevConfig)
+    config.from_envar("FOO")
     assert config["FOO"] == "BAR"
+    del os.environ["FOO"]
+    assert config["FOO"] == "BAZ"
 
 
 def test_user_can_change_value_manually():
     config = Tailor()
+    config["BAZ"] = "FOO"
+    assert config["BAZ"] == "FOO"
+
+
+def test_user_can_change_value_manually_but_env_value_takes_precedence():
+    config = Tailor()
     config["FOO"] = "BAZ"
-    assert config["FOO"] == "BAZ"
+    assert config["FOO"] == "BAR"
 
 
 def test_user_can_use_number_types_with_dotenv(env_path):
@@ -122,3 +137,15 @@ def test_dunder_ne():
     config_two["DEBUG"] = False
 
     assert config_one != config_two
+
+
+def test_env_var_can_be_renamed():
+    try:
+        del os.environ["FOO_DEBUG"]
+    except KeyError:
+        pass
+    assert os.getenv("FOO_DEBUG") is None
+    os.environ["FOO_DEBUG"] = "true"
+    config = Tailor()
+    config.from_envar("FOO_DEBUG", rename="DEBUG")
+    assert config["DEBUG"] is True
