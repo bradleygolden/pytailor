@@ -8,5 +8,6 @@
 
 
 VERSION = (0, 1, 6)
+PRE = "a0"
 
-__version__ = ".".join(map(str, VERSION))
+__version__ = ".".join(map(str, VERSION)) + PRE
