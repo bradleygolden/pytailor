@@ -7,3 +7,4 @@ class Config(object):
 class DevConfig(Config):
     DEBUG = True
     TESTING = False
+    FOO = "BAZ"
